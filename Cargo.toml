@@ -1,0 +1,63 @@
+[package]
+name = "p2p-messenger"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+
+[dependencies]
+# ── Async Runtime ──
+tokio = { version = "1.44", features = ["full", "tracing"] }
+tokio-util = "0.7"
+
+# ── P2P Networking (iroh ecosystem) ──
+# Note: iroh re-exports quinn internally. Only add quinn directly if you need
+# low-level QUIC types. If so, use 0.11 (not 0.12).
+iroh = "0.35"
+iroh-gossip = "0.35"
+iroh-blobs = "0.35"
+# quinn = "0.11"  # ← Only if you REALLY need it directly
+
+# ── Cryptography ──
+ed25519-dalek = "2.1"
+x25519-dalek = "2.0"
+chacha20poly1305 = "0.10"
+argon2 = "0.5"
+rand = "0.9"
+sha2 = "0.10"
+
+# ── Serialization ──
+serde = { version = "1.0", features = ["derive"] }
+postcard = { version = "1.1", features = ["alloc"] }
+
+# ── Embedded Database ──
+redb = "4.1"
+
+# ── CLI & TUI ──
+clap = { version = "4.5", features = ["derive", "env", "cargo"] }
+ratatui = "0.30"
+crossterm = "0.29"
+dialoguer = "0.11"
+
+# ── Observability ──
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "registry"] }
+tracing-appender = "0.2"
+
+# ── Error Handling ──
+thiserror = "2.0"
+anyhow = "1.0"
+color-eyre = "0.6"
+
+# ── Utilities ──
+futures = "0.3"
+async-trait = "0.1"
+dashmap = "6.1"
+parking_lot = "0.12"
+bytes = "1.10"
+uuid = { version = "1.16", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+directories = "6.0"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = "0.5"
