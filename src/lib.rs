@@ -1,7 +1,4 @@
-// src/lib.rs
 //! P2P Messenger library crate.
-//!
-//! Can be used as a library or via the binary.
 
 pub mod config;
 pub mod crypto;
@@ -12,10 +9,5 @@ pub mod storage;
 pub mod telemetry;
 pub mod ui;
 
-pub use cli::Args;
-pub use ui::App;
-
-pub mod cli {
-    pub use crate::config::Config;
-    // ... CLI parsing logic
-}
+// REMOVED: pub use cli::Args;  // This was broken - cli module doesn't exist yet
+// REMOVED: pub mod cli;        // Add this back when you actually create cli.rs

@@ -1,24 +1,20 @@
-// src/main.rs
-//! Binary entry point. THIN: only CLI parsing, telemetry init, then delegate to lib.
+//! Binary entry point.
 
-use color_eyre::Result;
-use p2p_messenger::{App, cli, telemetry};
+use p2p_messenger::telemetry;
 
 #[tokio::main]
-async fn main() -> Result<()> {
-    // 1. Initialize telemetry FIRST — before anything else
-    // This must happen before any tracing macros are used
+async fn main() -> anyhow::Result<()> {
+    // Initialize telemetry FIRST
     let _telemetry_guard = telemetry::init();
 
-    // 2. Now it's safe to use tracing
     tracing::info!("P2P Messenger starting up");
 
-    // 3. Parse CLI arguments (uses clap)
-    let args = cli::Args::parse();
+    // TODO: Parse CLI args, load config, run app
+    println!("P2P Messenger started. Press Ctrl+C to exit.");
 
-    // 4. Load configuration
-    let config = cli::load_config(&args)?;
+    // Keep running
+    tokio::signal::ctrl_c().await?;
+    tracing::info!("Shutting down");
 
-    // 5. Run the application (defined in lib)
-    App::new(config).run().await
+    Ok(())
 }
